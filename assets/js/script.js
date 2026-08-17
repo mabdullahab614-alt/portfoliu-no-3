@@ -72,6 +72,64 @@ list.addEventListener("mouseleave", () => {
   startScrolling();
 });
 
+// auto scrolling Technical Expertise row (same continuous-movement pattern as tech skills)
+const expertiseList = document.querySelector(".expertise-track");
+
+if (expertiseList) {
+  const expertiseSpeed = 0.5;
+  const expertiseInterval = 10;
+  let expertiseScrollPosition = 0;
+  let expertiseScrolling = false;
+
+  function startExpertiseScrolling() {
+    if (!expertiseScrolling) {
+      expertiseScrolling = true;
+      const totalExpertiseWidth =
+        expertiseList.scrollWidth - expertiseList.clientWidth;
+      const interval = setInterval(() => {
+        expertiseScrollPosition += expertiseSpeed;
+
+        if (expertiseScrollPosition >= totalExpertiseWidth) {
+          expertiseScrollPosition = 0;
+        }
+
+        if (!expertiseScrolling) {
+          clearInterval(interval);
+        }
+
+        expertiseList.scrollLeft = expertiseScrollPosition;
+      }, expertiseInterval);
+    }
+  }
+
+  function stopExpertiseScrolling() {
+    expertiseScrolling = false;
+  }
+
+  const expertiseObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          startExpertiseScrolling();
+        } else {
+          stopExpertiseScrolling();
+        }
+      });
+    },
+    { threshold: 0 }
+  );
+
+  expertiseObserver.observe(expertiseList);
+
+  expertiseList.addEventListener("mouseenter", () => {
+    stopExpertiseScrolling();
+  });
+
+  expertiseList.addEventListener("mouseleave", () => {
+    startExpertiseScrolling();
+  });
+}
+
 // variables
 const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
 const modalContainer = document.querySelector("[data-modal-container]");
@@ -367,67 +425,4 @@ document.addEventListener("DOMContentLoaded", function () {
   projectItems.forEach((item) => {
     observer.observe(item);
   });
-});
-
-// Technical Expertise: tab switching + horizontal scroll arrows
-
-document.addEventListener("DOMContentLoaded", function () {
-  const expertiseSection = document.getElementById("technical-expertise");
-  if (!expertiseSection) return;
-
-  const tabButtons = expertiseSection.querySelectorAll(
-    "[data-expertise-tab-btn]"
-  );
-  const panels = expertiseSection.querySelectorAll("[data-expertise-panel]");
-  const prevBtn = expertiseSection.querySelector("[data-expertise-prev]");
-  const nextBtn = expertiseSection.querySelector("[data-expertise-next]");
-
-  function getActivePanel() {
-    return expertiseSection.querySelector(
-      ".expertise-panel.active [data-expertise-scroll]"
-    );
-  }
-
-  tabButtons.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      const targetTab = this.dataset.tab;
-
-      tabButtons.forEach((b) => b.classList.remove("active"));
-      this.classList.add("active");
-
-      panels.forEach((panel) => {
-        const isTarget = panel.dataset.expertisePanel === targetTab;
-        panel.classList.toggle("active", isTarget);
-        if (isTarget) {
-          panel.removeAttribute("hidden");
-        } else {
-          panel.setAttribute("hidden", "");
-        }
-      });
-
-      // reset scroll position of the newly shown panel
-      const activeScroll = getActivePanel();
-      if (activeScroll) {
-        activeScroll.scrollLeft = 0;
-      }
-    });
-  });
-
-  if (prevBtn) {
-    prevBtn.addEventListener("click", function () {
-      const scrollEl = getActivePanel();
-      if (scrollEl) {
-        scrollEl.scrollBy({ left: -260, behavior: "smooth" });
-      }
-    });
-  }
-
-  if (nextBtn) {
-    nextBtn.addEventListener("click", function () {
-      const scrollEl = getActivePanel();
-      if (scrollEl) {
-        scrollEl.scrollBy({ left: 260, behavior: "smooth" });
-      }
-    });
-  }
 });
