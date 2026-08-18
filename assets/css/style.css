@@ -186,6 +186,9 @@ article {
   color: var(--orange-yellow-crayola);
   box-shadow: var(--shadow-1);
   z-index: 1;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: iconFloat 2.6s ease-in-out infinite;
 }
 
 .icon-box::before {
@@ -195,10 +198,55 @@ article {
   background: var(--eerie-black-1);
   border-radius: inherit;
   z-index: -1;
+  transition: background 0.25s ease;
 }
 
 .icon-box ion-icon {
   --ionicon-stroke-width: 35px;
+  transition: transform 0.25s ease;
+}
+
+@keyframes iconFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    box-shadow: var(--shadow-1);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.06);
+    box-shadow: 0 10px 18px hsla(45, 100%, 71%, 0.3);
+  }
+}
+
+/* stagger each icon so they don't all move in sync */
+.contact-item:nth-child(1) .icon-box {
+  animation-delay: 0s;
+}
+.contact-item:nth-child(2) .icon-box {
+  animation-delay: 0.4s;
+}
+.contact-item:nth-child(3) .icon-box {
+  animation-delay: 0.8s;
+}
+.contact-item:nth-child(4) .icon-box {
+  animation-delay: 1.2s;
+}
+
+/* extra pop on hover/tap, layered on top of the idle float */
+.contact-item:hover .icon-box,
+.contact-item:active .icon-box {
+  animation-play-state: paused;
+  transform: translateY(-6px) scale(1.12);
+  box-shadow: 0 10px 22px hsla(45, 100%, 71%, 0.4);
+}
+
+.contact-item:hover .icon-box::before {
+  background: hsla(45, 100%, 71%, 0.14);
+}
+
+.contact-item:hover .icon-box ion-icon,
+.contact-item:active .icon-box ion-icon {
+  transform: scale(1.1);
 }
 
 article {
