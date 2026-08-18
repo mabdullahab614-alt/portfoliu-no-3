@@ -17,19 +17,27 @@ sidebarBtn.addEventListener("click", function () {
 // mobile sidebar clicked by default
 sidebarBtn.click();
 
-// auto scrolling Tech Skills
-const list = document.querySelector(".technologies-list");
-const listItems = list.querySelectorAll(".technologies-item");
-const scrollSpeed = 0.7; // speed
-const intervalDuration = 10; // smoothness
-const totalWidth = list.scrollWidth - list.clientWidth;
-let scrollPosition = 0;
-let scrolling = false;
+// Generic continuous auto-scroll for horizontal marquee-style lists
+function setupAutoScroll(listSelector, scrollSpeed) {
+  const list = document.querySelector(listSelector);
+  if (!list) return;
 
-function startScrolling() {
-  if (!scrolling) {
+  const intervalDuration = 10; // smoothness
+  let scrollPosition = list.scrollLeft;
+  let scrolling = false;
+  let interval = null;
+
+  function getTotalWidth() {
+    return list.scrollWidth - list.clientWidth;
+  }
+
+  function startScrolling() {
+    if (scrolling) return;
     scrolling = true;
-    const interval = setInterval(() => {
+    interval = setInterval(() => {
+      const totalWidth = getTotalWidth();
+      if (totalWidth <= 0) return;
+
       scrollPosition += scrollSpeed;
 
       if (scrollPosition >= totalWidth) {
@@ -38,97 +46,61 @@ function startScrolling() {
 
       if (!scrolling) {
         clearInterval(interval);
+        return;
       }
 
       list.scrollLeft = scrollPosition;
     }, intervalDuration);
   }
-}
 
-function stopScrolling() {
-  scrolling = false;
-}
-
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        startScrolling();
-      } else {
-        stopScrolling();
-      }
-    });
-  },
-  { threshold: 0 }
-);
-
-observer.observe(list);
-
-list.addEventListener("mouseenter", () => {
-  stopScrolling();
-});
-
-list.addEventListener("mouseleave", () => {
-  startScrolling();
-});
-
-// auto scrolling Technical Expertise row (same continuous-movement pattern as tech skills)
-const expertiseList = document.querySelector(".expertise-track");
-
-if (expertiseList) {
-  const expertiseSpeed = 0.5;
-  const expertiseInterval = 10;
-  let expertiseScrollPosition = 0;
-  let expertiseScrolling = false;
-
-  function startExpertiseScrolling() {
-    if (!expertiseScrolling) {
-      expertiseScrolling = true;
-      const totalExpertiseWidth =
-        expertiseList.scrollWidth - expertiseList.clientWidth;
-      const interval = setInterval(() => {
-        expertiseScrollPosition += expertiseSpeed;
-
-        if (expertiseScrollPosition >= totalExpertiseWidth) {
-          expertiseScrollPosition = 0;
-        }
-
-        if (!expertiseScrolling) {
-          clearInterval(interval);
-        }
-
-        expertiseList.scrollLeft = expertiseScrollPosition;
-      }, expertiseInterval);
+  function stopScrolling() {
+    scrolling = false;
+    if (interval) {
+      clearInterval(interval);
+      interval = null;
     }
   }
 
-  function stopExpertiseScrolling() {
-    expertiseScrolling = false;
-  }
-
-  const expertiseObserver = new IntersectionObserver(
+  const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          startExpertiseScrolling();
+          startScrolling();
         } else {
-          stopExpertiseScrolling();
+          stopScrolling();
         }
       });
     },
     { threshold: 0 }
   );
 
-  expertiseObserver.observe(expertiseList);
+  observer.observe(list);
 
-  expertiseList.addEventListener("mouseenter", () => {
-    stopExpertiseScrolling();
+  list.addEventListener("mouseenter", () => {
+    stopScrolling();
   });
 
-  expertiseList.addEventListener("mouseleave", () => {
-    startExpertiseScrolling();
+  list.addEventListener("mouseleave", () => {
+    scrollPosition = list.scrollLeft;
+    startScrolling();
+  });
+
+  // Keep our tracked position in sync if the user manually scrolls (touch, etc.)
+  list.addEventListener("touchstart", () => {
+    stopScrolling();
+  });
+
+  list.addEventListener("touchend", () => {
+    scrollPosition = list.scrollLeft;
+    startScrolling();
   });
 }
+
+// auto scrolling Tech Skills (Development Skills row)
+setupAutoScroll(".technologies-list", 0.7);
+
+// auto scrolling Technical Expertise cards
+setupAutoScroll(".expertise-cards", 0.5);
 
 // variables
 const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
