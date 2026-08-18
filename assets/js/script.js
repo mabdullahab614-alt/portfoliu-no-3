@@ -398,3 +398,51 @@ document.addEventListener("DOMContentLoaded", function () {
     observer.observe(item);
   });
 });
+
+// Universal click/tap "press" animation — works reliably for both mouse
+// clicks and touch taps (plain CSS :active is unreliable on many mobile
+// browsers, especially iOS Safari, unless a touch listener is bound).
+document.addEventListener("DOMContentLoaded", function () {
+  const pressableSelectors = [
+    ".navbar-link",
+    ".filter-item button",
+    ".filter-select",
+    ".select-item button",
+    ".pagination-button",
+    ".social-item .social-link",
+    ".copy-button",
+    ".form-btn",
+    ".info_more-btn",
+    ".expertise-nav-btn",
+    ".more",
+    ".modal-close-btn",
+    ".project-buttons a",
+    ".certificate-container",
+  ].join(", ");
+
+  const pressableEls = document.querySelectorAll(pressableSelectors);
+
+  pressableEls.forEach((el) => {
+    el.style.cursor = "pointer";
+
+    const press = () => el.classList.add("btn-press");
+    const release = () => el.classList.remove("btn-press");
+
+    // Pointer events cover mouse, touch, and pen uniformly.
+    el.addEventListener("pointerdown", press);
+    el.addEventListener("pointerup", release);
+    el.addEventListener("pointerleave", release);
+    el.addEventListener("pointercancel", release);
+
+    // Fallback for browsers without full Pointer Events support.
+    el.addEventListener("touchstart", press, { passive: true });
+    el.addEventListener("touchend", release);
+    el.addEventListener("touchcancel", release);
+    el.addEventListener("mousedown", press);
+    el.addEventListener("mouseup", release);
+  });
+});
+
+// Enables :active / :hover states to register reliably on iOS Safari,
+// which otherwise ignores them unless a touch listener exists on the page.
+document.addEventListener("touchstart", function () {}, { passive: true });
