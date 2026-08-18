@@ -2291,6 +2291,17 @@ textarea.form-input::-webkit-resizer {
   box-shadow: var(--shadow-2);
   z-index: 1;
   scroll-snap-align: start;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.expertise-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-2), 0 0 30px hsla(45, 100%, 71%, 0.55);
+}
+
+.expertise-card:hover .expertise-card-icon {
+  filter: drop-shadow(0 0 12px hsl(45, 100%, 71%));
+  transition: filter 0.35s ease;
 }
 
 .expertise-card::before {
