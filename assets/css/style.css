@@ -18,13 +18,13 @@
     hsla(240, 3%, 13%, 0.123);
   --bg-gradient-yellow-1: linear-gradient(
     to bottom right,
-    hsl(201, 90%, 65%) 0%,
-    hsla(213, 88%, 60%, 0) 50%
+    hsl(45, 100%, 71%) 0%,
+    hsla(36, 100%, 69%, 0) 50%
   );
   --bg-gradient-yellow-2: linear-gradient(
       135deg,
-      hsla(201, 90%, 60%, 0.251) 0%,
-      hsla(213, 88%, 58%, 0) 59.86%
+      hsla(45, 100%, 71%, 0.251) 0%,
+      hsla(35, 100%, 68%, 0) 59.86%
     ),
     hsl(240, 2%, 13%);
   --border-gradient-onyx: linear-gradient(
@@ -34,8 +34,8 @@
   );
   --text-gradient-yellow: linear-gradient(
     to right,
-    hsl(201, 90%, 62%),
-    hsl(213, 88%, 58%)
+    hsl(45, 100%, 72%),
+    hsl(35, 100%, 68%)
   );
 
   /* solid */
@@ -47,8 +47,8 @@
   --sha-background: linear-gradient(to bottom, #B4D7E0 0%, #276aa5 100%);
   --white-1: hsl(0, 0%, 100%);
   --white-2: hsl(0, 0%, 98%);
-  --orange-yellow-crayola: hsl(201, 90%, 60%);
-  --vegas-gold: hsl(213, 55%, 65%);
+  --orange-yellow-crayola: hsl(45, 100%, 72%);
+  --vegas-gold: hsl(45, 54%, 58%);
   --light-gray: hsl(0, 0%, 84%);
   --light-gray-70: hsla(0, 0%, 84%, 0.7);
   --bittersweet-shimmer: hsl(0, 43%, 51%);
@@ -320,7 +320,7 @@ main {
 }
 
 .sidebar.active {
-  max-height: 560px;
+  max-height: 405px;
 }
 
 .sidebar-info {
@@ -361,9 +361,9 @@ main {
 @keyframes glow {
   from {
     box-shadow: 0 0 0.5px #fff, 0 0 1px #fff, 0 0 2px #fff,
-      0 0 4px hsla(201, 100%, 88%, 0.5), 0 0 7px hsla(201, 100%, 88%, 0.5),
-      0 0 10px hsla(201, 100%, 88%, 0.5), 0 0 12px hsla(201, 100%, 88%, 0.5),
-      0 0 15px hsla(201, 100%, 88%, 0.5);
+      0 0 4px hsla(45, 100%, 90%, 0.5), 0 0 7px hsla(45, 100%, 90%, 0.5),
+      0 0 10px hsla(45, 100%, 90%, 0.5), 0 0 12px hsla(45, 100%, 90%, 0.5),
+      0 0 15px hsla(45, 100%, 90%, 0.5);
   }
   to {
     box-shadow: 0 0 2.5px #ffffff0e;
@@ -451,29 +451,6 @@ main {
 
 .contact-info address {
   font-style: normal;
-  overflow-wrap: break-word;
-  word-break: break-word;
-}
-
-@keyframes textGlow {
-  0%,
-  100% {
-    color: var(--orange-yellow-crayola);
-    text-shadow: 0 0 4px hsla(201, 90%, 60%, 0.35);
-  }
-  50% {
-    color: hsl(213, 88%, 58%);
-    text-shadow: 0 0 12px hsla(201, 90%, 60%, 0.9),
-      0 0 20px hsla(213, 88%, 58%, 0.55);
-  }
-}
-
-.contact-email {
-  display: inline-block;
-  font-weight: var(--fw-500);
-  animation: textGlow 3s ease-in-out infinite;
-  overflow-wrap: break-word;
-  word-break: break-word;
 }
 
 .social-list {
@@ -861,7 +838,7 @@ main {
 }
 
 .technologies-item img:hover {
-  filter: drop-shadow(10px 10px 30px hsl(201, 90%, 60%));
+  filter: drop-shadow(10px 10px 30px hsl(45, 100%, 71%));
 }
 
 /* Social profiles */
@@ -878,7 +855,7 @@ main {
 }
 
 .socials-item img:hover {
-  filter: drop-shadow(0 0 20px hsl(201, 90%, 60%));
+  filter: drop-shadow(0 0 20px hsl(45, 100%, 71%));
 }
 
 /*-----------------------------------*\
@@ -955,31 +932,6 @@ main {
   color: var(--light-gray);
   font-weight: var(--fw-300);
   line-height: 1.6;
-}
-
-@media (min-width: 640px) {
-  .timeline-list {
-    margin-left: 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 22px 28px;
-  }
-
-  .timeline-item {
-    background: var(--eerie-black-2);
-    border: 1px solid var(--jet);
-    border-radius: 14px;
-    padding: 18px;
-  }
-
-  .timeline-item:not(:last-child) {
-    margin-bottom: 0;
-  }
-
-  .timeline-item:not(:last-child)::before,
-  .timeline-item::after {
-    content: none;
-  }
 }
 
 /**
@@ -1192,7 +1144,7 @@ main {
   margin: auto;
   margin-bottom: 15px;
   --height-of-loader: 40px;
-  --loader-color: hsl(201, 90%, 60%);
+  --loader-color: hsl(45, 100%, 72%);
   width: 100%;
   height: var(--height-of-loader);
   border-radius: 30px;
@@ -1600,7 +1552,7 @@ textarea.form-input::-webkit-resizer {
   }
 
   .sidebar.active {
-    max-height: 820px;
+    max-height: 650px;
   }
 
   .sidebar-info {
@@ -1636,7 +1588,7 @@ textarea.form-input::-webkit-resizer {
 
   .info_more-btn ion-icon {
     font-size: 26px;
-    color: hsl(201, 90%, 60%);
+    color: hsl(45, 100%, 72%);
   }
 
   .separator {
@@ -1818,7 +1770,7 @@ textarea.form-input::-webkit-resizer {
    */
 
   .timeline-list {
-    margin-left: 0;
+    margin-left: 65px;
   }
 
   .timeline-item:not(:last-child)::before {
@@ -2242,7 +2194,7 @@ textarea.form-input::-webkit-resizer {
 }
 .copy-button {
   background-color: hsl(0, 0%, 22%);
-  color: hsl(201, 90%, 60%);
+  color: hsl(45, 100%, 72%);
   border: none;
   border-radius: 5px;
   padding: 5px;
@@ -2324,6 +2276,7 @@ textarea.form-input::-webkit-resizer {
   margin-bottom: 20px;
 }
 
+/* Single continuously auto-scrolling row (same behaviour as Development Skills) */
 .expertise-cards {
   display: flex;
   gap: 16px;
@@ -2338,18 +2291,6 @@ textarea.form-input::-webkit-resizer {
   border-radius: 14px;
   box-shadow: var(--shadow-2);
   z-index: 1;
-  scroll-snap-align: start;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-}
-
-.expertise-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-2), 0 0 30px hsla(201, 90%, 60%, 0.55);
-}
-
-.expertise-card:hover .expertise-card-icon {
-  filter: drop-shadow(0 0 12px hsl(201, 90%, 60%));
-  transition: filter 0.35s ease;
 }
 
 .expertise-card::before {
@@ -2486,73 +2427,4 @@ textarea.form-input::-webkit-resizer {
   .expertise-cards {
     gap: 20px;
   }
-}
-
-/*-----------------------------------*\
-  #CLICK / TAP FEEDBACK ANIMATION
-\*-----------------------------------*/
-
-.navbar-link,
-.filter-item button,
-.filter-select,
-.select-item button,
-.pagination-button,
-.social-item .social-link,
-.copy-button,
-.form-btn,
-.info_more-btn,
-.expertise-nav-btn,
-.more,
-.modal-close-btn,
-.project-buttons a,
-.certificate-container {
-  transition: transform 0.15s ease, background-color 0.3s ease,
-    color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.navbar-link:active,
-.filter-item button:active,
-.filter-select:active,
-.select-item button:active,
-.pagination-button:active,
-.social-item .social-link:active,
-.copy-button:active,
-.form-btn:active,
-.info_more-btn:active,
-.expertise-nav-btn:active,
-.more:active,
-.modal-close-btn:active,
-.project-buttons a:active,
-.certificate-container:active {
-  transform: scale(0.9);
-}
-
-.pagination-button:active {
-  box-shadow: 0 0 0 3px hsla(201, 90%, 60%, 0.35);
-}
-
-.social-item .social-link:active {
-  color: var(--orange-yellow-crayola);
-}
-
-.project-buttons a:active {
-  background-color: hsla(201, 90%, 60%, 0.25);
-}
-
-/* JS-driven press state (see script.js) — guaranteed to show on both
-   mouse clicks and touch taps, unlike plain CSS :active on some browsers */
-.btn-press {
-  transform: scale(0.9) !important;
-}
-
-.social-item .social-link.btn-press {
-  color: var(--orange-yellow-crayola) !important;
-}
-
-.pagination-button.btn-press {
-  box-shadow: 0 0 0 3px hsla(201, 90%, 60%, 0.35) !important;
-}
-
-.project-buttons a.btn-press {
-  background-color: hsla(201, 90%, 60%, 0.25) !important;
 }
