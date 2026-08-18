@@ -17,47 +17,40 @@ sidebarBtn.addEventListener("click", function () {
 // mobile sidebar clicked by default
 sidebarBtn.click();
 
-// Generic continuous auto-scroll for horizontal marquee-style lists
-function setupAutoScroll(listSelector, scrollSpeed) {
-  const list = document.querySelector(listSelector);
-  if (!list) return;
+// Generic continuous auto-scroll helper (used for Development Skills + Technical Expertise)
+function setupAutoScroll(listEl, speed = 0.7, intervalDuration = 10) {
+  if (!listEl) return;
 
-  const intervalDuration = 10; // smoothness
-  let scrollPosition = list.scrollLeft;
+  let scrollPosition = listEl.scrollLeft || 0;
   let scrolling = false;
-  let interval = null;
+  let intervalId = null;
 
   function getTotalWidth() {
-    return list.scrollWidth - list.clientWidth;
+    return listEl.scrollWidth - listEl.clientWidth;
   }
 
   function startScrolling() {
     if (scrolling) return;
     scrolling = true;
-    interval = setInterval(() => {
+    intervalId = setInterval(() => {
       const totalWidth = getTotalWidth();
       if (totalWidth <= 0) return;
 
-      scrollPosition += scrollSpeed;
+      scrollPosition += speed;
 
       if (scrollPosition >= totalWidth) {
         scrollPosition = 0;
       }
 
-      if (!scrolling) {
-        clearInterval(interval);
-        return;
-      }
-
-      list.scrollLeft = scrollPosition;
+      listEl.scrollLeft = scrollPosition;
     }, intervalDuration);
   }
 
   function stopScrolling() {
     scrolling = false;
-    if (interval) {
-      clearInterval(interval);
-      interval = null;
+    if (intervalId) {
+      clearInterval(intervalId);
+      intervalId = null;
     }
   }
 
@@ -74,33 +67,17 @@ function setupAutoScroll(listSelector, scrollSpeed) {
     { threshold: 0 }
   );
 
-  observer.observe(list);
+  observer.observe(listEl);
 
-  list.addEventListener("mouseenter", () => {
-    stopScrolling();
-  });
-
-  list.addEventListener("mouseleave", () => {
-    scrollPosition = list.scrollLeft;
-    startScrolling();
-  });
-
-  // Keep our tracked position in sync if the user manually scrolls (touch, etc.)
-  list.addEventListener("touchstart", () => {
-    stopScrolling();
-  });
-
-  list.addEventListener("touchend", () => {
-    scrollPosition = list.scrollLeft;
-    startScrolling();
-  });
+  listEl.addEventListener("mouseenter", stopScrolling);
+  listEl.addEventListener("mouseleave", startScrolling);
 }
 
-// auto scrolling Tech Skills (Development Skills row)
-setupAutoScroll(".technologies-list", 0.7);
+// auto scrolling Development Skills
+setupAutoScroll(document.querySelector(".technologies-list"), 0.7, 10);
 
-// auto scrolling Technical Expertise cards
-setupAutoScroll(".expertise-cards", 0.5);
+// auto scrolling Technical Expertise (single continuous row, same behaviour)
+setupAutoScroll(document.querySelector("[data-expertise-scroll]"), 0.7, 10);
 
 // variables
 const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
@@ -398,51 +375,3 @@ document.addEventListener("DOMContentLoaded", function () {
     observer.observe(item);
   });
 });
-
-// Universal click/tap "press" animation — works reliably for both mouse
-// clicks and touch taps (plain CSS :active is unreliable on many mobile
-// browsers, especially iOS Safari, unless a touch listener is bound).
-document.addEventListener("DOMContentLoaded", function () {
-  const pressableSelectors = [
-    ".navbar-link",
-    ".filter-item button",
-    ".filter-select",
-    ".select-item button",
-    ".pagination-button",
-    ".social-item .social-link",
-    ".copy-button",
-    ".form-btn",
-    ".info_more-btn",
-    ".expertise-nav-btn",
-    ".more",
-    ".modal-close-btn",
-    ".project-buttons a",
-    ".certificate-container",
-  ].join(", ");
-
-  const pressableEls = document.querySelectorAll(pressableSelectors);
-
-  pressableEls.forEach((el) => {
-    el.style.cursor = "pointer";
-
-    const press = () => el.classList.add("btn-press");
-    const release = () => el.classList.remove("btn-press");
-
-    // Pointer events cover mouse, touch, and pen uniformly.
-    el.addEventListener("pointerdown", press);
-    el.addEventListener("pointerup", release);
-    el.addEventListener("pointerleave", release);
-    el.addEventListener("pointercancel", release);
-
-    // Fallback for browsers without full Pointer Events support.
-    el.addEventListener("touchstart", press, { passive: true });
-    el.addEventListener("touchend", release);
-    el.addEventListener("touchcancel", release);
-    el.addEventListener("mousedown", press);
-    el.addEventListener("mouseup", release);
-  });
-});
-
-// Enables :active / :hover states to register reliably on iOS Safari,
-// which otherwise ignores them unless a touch listener exists on the page.
-document.addEventListener("touchstart", function () {}, { passive: true });
