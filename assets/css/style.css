@@ -2501,7 +2501,11 @@ textarea.form-input::-webkit-resizer {
 .copy-button,
 .form-btn,
 .info_more-btn,
-.expertise-nav-btn {
+.expertise-nav-btn,
+.more,
+.modal-close-btn,
+.project-buttons a,
+.certificate-container {
   transition: transform 0.15s ease, background-color 0.3s ease,
     color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -2515,7 +2519,11 @@ textarea.form-input::-webkit-resizer {
 .copy-button:active,
 .form-btn:active,
 .info_more-btn:active,
-.expertise-nav-btn:active {
+.expertise-nav-btn:active,
+.more:active,
+.modal-close-btn:active,
+.project-buttons a:active,
+.certificate-container:active {
   transform: scale(0.9);
 }
 
@@ -2525,4 +2533,8 @@ textarea.form-input::-webkit-resizer {
 
 .social-item .social-link:active {
   color: var(--orange-yellow-crayola);
+}
+
+.project-buttons a:active {
+  background-color: hsla(201, 90%, 60%, 0.25);
 }
