@@ -2538,3 +2538,21 @@ textarea.form-input::-webkit-resizer {
 .project-buttons a:active {
   background-color: hsla(201, 90%, 60%, 0.25);
 }
+
+/* JS-driven press state (see script.js) — guaranteed to show on both
+   mouse clicks and touch taps, unlike plain CSS :active on some browsers */
+.btn-press {
+  transform: scale(0.9) !important;
+}
+
+.social-item .social-link.btn-press {
+  color: var(--orange-yellow-crayola) !important;
+}
+
+.pagination-button.btn-press {
+  box-shadow: 0 0 0 3px hsla(201, 90%, 60%, 0.35) !important;
+}
+
+.project-buttons a.btn-press {
+  background-color: hsla(201, 90%, 60%, 0.25) !important;
+}
